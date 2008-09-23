@@ -9,7 +9,6 @@ class AbMigration < ActiveRecord::Migration
     end
 
     add_index "abs", ["testname"], :name => "testname"
-    add_index "abs", ["testname", "version"], :name => "testname_version"
     add_index "abs", ["stub"], :name => "stub"
   end
 
