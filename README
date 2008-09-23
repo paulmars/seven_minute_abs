@@ -1,7 +1,8 @@
 SevenMinuteAbs
 ==============
 
-Introduction goes here.
+ruby script/generate ab_migration
+rake db:migrate
 
 
 Example
