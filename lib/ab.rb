@@ -1,16 +1,28 @@
 class Ab < ActiveRecord::Base
 
  def self.click!(stub)
-   ab = self.find_by_stub(stub)
-   ab.click_count += 1
-   ab.save
-   ab
+   self.update_all("click_count = click_count + 1", ["stub = ?", stub])
  end
 
  def self.display!(testname, version)
    ab = self.find_test(testname, version)
    ab.display_count += 1
    ab.save
+   ab
+ end
+
+ def self.for_testname(testname, version_count, mod_by)
+   abs = self.find(:all, :conditions => {:testname => testname})
+   if abs.size == 0
+     ab = self.display!(testname, 0)
+   elsif abs.size == 1
+     ab = abs.first
+     ab.increment!("display_count")
+   else
+     version_wanted = mod_by % version_count
+     ab = abs.select{|ab| version_wanted == ab.version }.first
+     ab ||= self.display!(testname, version_wanted)
+   end
    ab
  end
 
