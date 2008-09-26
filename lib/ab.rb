@@ -26,6 +26,12 @@ class Ab < ActiveRecord::Base
    ab
  end
 
+ def self.for_click_count(testname)
+   ab = self.find(:first, :conditions => {:testname => testname})
+   ab = self.display!(testname, 0) if ab.nil?
+   ab
+ end
+
  def before_create
    self.stub = random_string(10) if !self.stub?
  end

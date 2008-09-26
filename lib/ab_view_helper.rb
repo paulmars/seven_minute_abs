@@ -17,4 +17,11 @@ module AbViewHelper
     block_is_within_action_view?(block) ? concat(content_tag, block.binding) : content_tag
   end
 
+  def click_count(testname, &block)
+    testname = "click_count:#{testname.gsub(/\W/,'_')}"
+    ab = Ab.for_click_count(testname)
+    content_tag = capture(ab, &block)
+    block_is_within_action_view?(block) ? concat(content_tag, block.binding) : content_tag
+  end
+
 end
