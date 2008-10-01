@@ -1,10 +1,20 @@
 module SevenMinuteAbs
 
-  # before_filter :ab_testing
-
-  def ab_testing
+  def ab_click_count
     Ab.click!(params[:ab]) if params[:ab]
-    @ab_version = Time.now.to_i%2  #only supports a/b testing, 2 versions max
+  end
+
+  # sets up random string, mod by version available
+  def ab_version_modulation
+    @ab_version ||= Time.now.to_i
+  end
+
+  def increment_display_count?
+    @inc_ab_display_count = true
+  end
+
+  def skip_display_count!
+    @inc_ab_display_count = false
   end
 
 end

@@ -1,17 +1,18 @@
 module AbViewHelper
 
-  # <% ab_test("linkcolor") do |test,version|%>
+  # <% ab_test("linkcolor") do |test,version| %>
   #   <% if version == 0 %>
-  #     <%= link_to "Blue version", users_path(:ab => test.stub), {:style => "color:blue"} %>
+  #     <%= link_to "Blue version", "new", {:style => "color:blue"} %>
   #   <% elsif version == 1 %>
-  #     <%= link_to "Orange version", users_path(:ab => test.stub), {:style => "color:orange"} %>
+  #     <%= link_to "Orange version", "new?ab=#{test.stub}", {:style => "color:orange"} %>
   #   <% else %>
-  #     <%= link_to "Ab testing not enabled",  users_path() %>
+  #     <%= link_to "Orange version", "new", {:style => "color:orange"} %>
   #   <% end %>
   # <% end %>
 
-  def ab_test(testname, &block)
-    ab = Ab.display!(testname, @ab_version) if @ab_version
+  def ab_test(testname, version_count, &block)
+    testname = testname.gsub(/\W/,'_')
+    ab = Ab.for_testname(testname, version_count, @ab_version)
     version = ab ? ab.version : nil
     content_tag = capture(ab, version, &block)
     block_is_within_action_view?(block) ? concat(content_tag, block.binding) : content_tag
@@ -19,7 +20,7 @@ module AbViewHelper
 
   def click_count(testname, &block)
     testname = "click_count:#{testname.gsub(/\W/,'_')}"
-    ab = Ab.for_click_count(testname)
+    ab = Ab.for_click_count(testname, @inc_ab_display_count)
     content_tag = capture(ab, &block)
     block_is_within_action_view?(block) ? concat(content_tag, block.binding) : content_tag
   end
