@@ -43,7 +43,7 @@ class Ab < ActiveRecord::Base
     key = "ab_stub:#{testname}_v:#{version}"
     fb_user = memcache_me(key) {
       ab = self.find(:first,
-                     :select => "stub"
+                     :select => "stub",
                      :conditions => ["testname = ? and version = ?",
                                       testname,
                                       version])
