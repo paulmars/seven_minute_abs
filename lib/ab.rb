@@ -41,7 +41,7 @@ class Ab < ActiveRecord::Base
 
   def self.stub_for_test_or_create(testname, version)
     key = "ab_stub:#{testname}_v:#{version}"
-    fb_user = memcache_me(key) {
+    # fb_user = memcache_me(key) {
       ab = self.find(:first,
                      :select => "stub",
                      :conditions => ["testname = ? and version = ?",
@@ -49,19 +49,19 @@ class Ab < ActiveRecord::Base
                                       version])
       ab ||= self.create(:testname => testname, :version => version)
       ab.stub
-    }
+    # }
   end
 
   def self.find_test(testname, version)
     key = "ab:#{testname}_v:#{version}"
-    fb_user = memcache_me(key) {
+    # fb_user = memcache_me(key) {
       ab = self.find(:first,
                     :conditions => ["testname = ? and version = ?",
                                      testname,
                                      version])
       ab ||= self.create(:testname => testname, :version => version)
       ab
-    }
+    # }
   end
 
   def after_save

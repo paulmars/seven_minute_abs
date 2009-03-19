@@ -1,8 +1,26 @@
-SevenMinuteAbs
-==============
+== SevenMinuteAbs
+
+= Installation
+
+./script/plugin install git://github.com/paulmars/seven_minute_abs.git
+git add vendor/plugins/seven_minute_abs/
+git commit -a -m "bare seven minute abs"
+
+= Setup the database to store your info
 
 ruby script/generate ab_migration
 rake db:migrate
+
+= Include Code
+add these lines
+
+ApplicationHelper
+
+    include AbViewHelper
+
+Application.rb (or ApplicationController)
+
+    include SevenMinuteAbs
 
 
 Example
@@ -11,4 +29,4 @@ Example
 Example goes here.
 
 
-Copyright (c) 2008 [name of plugin creator], released under the MIT license
+Copyright (c) 2008 Paul McKellar, released under the MIT license

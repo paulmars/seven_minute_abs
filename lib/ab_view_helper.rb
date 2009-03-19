@@ -1,6 +1,6 @@
 module AbViewHelper
 
-  # <% ab_test("linkcolor") do |test,version| %>
+  # <% ab_test("linkcolor", 2) do |test,version| %>
   #   <% if version == 0 %>
   #     <%= link_to "Blue version", "new", {:style => "color:blue"} %>
   #   <% elsif version == 1 %>

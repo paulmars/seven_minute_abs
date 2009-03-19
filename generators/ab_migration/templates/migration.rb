@@ -6,6 +6,7 @@ class AbMigration < ActiveRecord::Migration
       t.integer "display_count", :default => 0
       t.integer "click_count",   :default => 0
       t.string  "stub"
+      t.datetime "created_at", "updated_at"
     end
 
     add_index "abs", ["testname"], :name => "testname"
