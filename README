@@ -1,30 +1,52 @@
-== SevenMinuteAbs
+SevenMinuteAbs
+=======
 
-= Installation
+Ab testing is 7 minutes.  Not 6, not 5, 7!
 
-./script/plugin install git://github.com/paulmars/seven_minute_abs.git
-git add vendor/plugins/seven_minute_abs/
-git commit -a -m "bare seven minute abs"
+Tested in rails 2.2, so far.
 
-= Setup the database to store your info
+Installation
+=======
 
-ruby script/generate ab_migration
-rake db:migrate
+  ./script/plugin install git://github.com/paulmars/seven_minute_abs.git
+  git add vendor/plugins/seven_minute_abs/
+  git commit -m "bare seven minute abs installed"
 
-= Include Code
-add these lines
+Setup the database to store your info
+=======
+
+  ruby script/generate ab_migration
+  rake db:migrate
+
+
+Include Code
+=======
+add these lines to these files
 
 ApplicationHelper
 
-    include AbViewHelper
+  include AbViewHelper
 
-Application.rb (or ApplicationController)
+Application.rb (or ApplicationController in rails 2.3)
 
-    include SevenMinuteAbs
+  include SevenMinuteAbs
+  before_filter :ab_click_count
+
+
+Use it!
+=======
+Test if orange or blue gets more clicks
+
+  <% ab_test("linkcolor", 2) do |test,version|%>
+    <% if version == 0 %>
+      <%= link_to "Blue version", users_path(:ab => test.stub), {:style => "color:blue"} %>
+    <% elsif version == 1 %>
+      <%= link_to "Orange version", users_path(:ab => test.stub), {:style => "color:orange"} %>
+    <% end %>
+  <% end %>
 
 
 Example
-=======
 
 Example goes here.
 
