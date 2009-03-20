@@ -35,18 +35,23 @@ Use it!
 =======
 Test if orange or blue gets more clicks
 
+"linkcolor" -> name of your test
+2 -> number of different versions you have (else statement)
+
+make sure to include 'test.stub' in any urls, otherwise clicks won't be counted! 
+
   <% ab_test("linkcolor", 2) do |test,version|%>
     <% if version == 0 %>
-      <%= link_to "Blue version", users_path(:ab => test.stub), {:style => "color:blue"} %>
+      <%= link_to "Blue version", url_for(:ab => test.stub), {:style => "color:blue"} %>
     <% elsif version == 1 %>
-      <%= link_to "Orange version", users_path(:ab => test.stub), {:style => "color:orange"} %>
+      <%= link_to "Orange version", url_for(:ab => test.stub), {:style => "color:orange"} %>
     <% end %>
   <% end %>
 
 
 See Stats
 =======
-A quick way to see your stats
+A quick way to see your stats.  You want the highest % possible to be your main choice!
 
 <% Ab.find(:all).each do |ab| %>
   <div class="ab-result">
