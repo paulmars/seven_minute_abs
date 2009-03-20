@@ -64,6 +64,10 @@ class Ab < ActiveRecord::Base
   #     # Cache.delete("ab_stub:#{self.testname}_v:#{self.version}")
   #   end
 
+  def percent_clicked
+    (self.click_count.to_f*10000000 / self.display_count).floor/100000
+  end
+
 protected
 
   def random_string(len)

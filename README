@@ -3,14 +3,13 @@ SevenMinuteAbs
 
 Ab testing is 7 minutes.  Not 6, not 5, 7!
 
-Tested in rails 2.2, so far.
+Tested in rails 2.3.2
 
 Installation
 =======
-
+go to your rails app directory
+  
   ./script/plugin install git://github.com/paulmars/seven_minute_abs.git
-  git add vendor/plugins/seven_minute_abs/
-  git commit -m "bare seven minute abs installed"
 
 Setup the database to store your info
 =======
@@ -23,15 +22,14 @@ Include Code
 =======
 add these lines to these files
 
-ApplicationHelper
+  module ApplicationHelper
+    include AbViewHelper
+  end
 
-  include AbViewHelper
-
-Application.rb (or ApplicationController in rails 2.3)
-
-  include SevenMinuteAbs
-  before_filter :ab_click_count
-
+  class ApplicationController < ActionController::Base
+    include SevenMinuteAbs
+    before_filter :ab_click_count
+  end
 
 Use it!
 =======
@@ -46,9 +44,16 @@ Test if orange or blue gets more clicks
   <% end %>
 
 
-Example
+See Stats
+=======
+A quick way to see your stats
 
-Example goes here.
-
+<% Ab.find(:all).each do |ab| %>
+  <div class="ab-result">
+    <pre>
+      name:<%= ab.testname %> v:<%= ab.version %> <%= ab.percent_clicked %>%     <%= ab.display_count %> <%= ab.click_count %> <%= ab.stub %> <%= ab.created_at %>
+    </pre>
+  </div>
+<% end %>
 
 Copyright (c) 2008 Paul McKellar, released under the MIT license
