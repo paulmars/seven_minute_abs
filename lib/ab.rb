@@ -13,17 +13,17 @@ class Ab < ActiveRecord::Base
     self.displayed!(ab.stub)
     ab
   end
- 
+
   def self.for_testname(testname, version_count, mod_by)
     version_wanted = mod_by % version_count
     ab = self.display!(testname, version_wanted)
     ab
   end
- 
+
   def before_create
     self.stub = random_string(10) if !self.stub?
   end
-  
+
   def self.find_test(testname, version)
     key = "ab:#{testname}_v:#{version}"
     # future memcache tutorial
@@ -36,15 +36,15 @@ class Ab < ActiveRecord::Base
       ab
     # }
   end
-  
+
   # future tutorials
-  
+
   #   def self.for_click_count(testname, increment_display = true)
   #     ab = self.find_test(testname, 0)
   #     self.displayed!(ab.stub) if increment_display
   #     ab
   #   end
- 
+
   #   def self.stub_for_test_or_create(testname, version)
   #     key = "ab_stub:#{testname}_v:#{version}"
   #     # fb_user = memcache_me(key) {
